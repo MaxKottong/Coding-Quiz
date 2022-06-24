@@ -14,9 +14,21 @@ var i = 0;
 var timer = 61;
 var timerCount;
 
+function addTimer() {
+    timerCount = setInterval(function() {
+        timer--;
+        var timerReset = homepageTimeEl.textContent = "Time: " + timer;
+        if (timer <= 0) {
+            clearInterval(timerCount);
+            homepageTimeEl.textContent = timerReset;
+        }
+    }, 1000);
+}
+
 document.addEventListener("click", function(event) {
     if (event.target === startQuizBtnEl) {
         containerEl.style.display = "none";
+        allDoneEl.style.display = "none";
         displayQuestions();
     }
 });
@@ -95,9 +107,9 @@ function displayQuestions() {
     questionListEl.appendChild(li4);
     divQuestionsEl.appendChild(questionListEl);
 
-    var questionBtn = document.querySelector(".questionBtn")
+    var questionBtn = document.querySelector(".questionBtn");
     questionBtn.forEach(function(event) {
-        event.addEventListener("click", buttonHandler)
+        event.addEventListener("click", buttonHandler);
     });
 }
 
@@ -107,8 +119,8 @@ function buttonHandler(event) {
         containerEl.style.display = "none";
         showScore();
     }
-    var rightAnswer = event.target.textContent
-    if (rightAnswer === questions[i].answer) {
+    var answerChoice = event.target.textContent;
+    if (answerChoice === questions[i].answer) {
         answerResponseEl.setAttribute("style", "color: green");
         answerResponseEl.textContent = "Correct";
     } else {
