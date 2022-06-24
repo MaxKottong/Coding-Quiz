@@ -8,16 +8,33 @@
 </head>
 <body>
     <header>
-        <button id="highscores" class="btn">View Highscores</button>
+        <a id="view-highscore" href="./assets/html/highscores.html">View Highscores</a>
+        <div id="homepage-time">Time: 0</div>
     </header>
 <div class="container">
     <div id="homepage">
         <h1>Coding Quiz Challenge</h1>
         <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
-        <button id="start-quiz" class="btn">Start Quiz</button>
+        <button id="start-quiz-btn" class="btn">Start Quiz</button>
     </div>
 </div>
 
-<script src="./assets/js/script.js"></script>
+<div class="divQuestions">
+    <h3 id="title"></h3>
+    <ol id="question-list"></ol>
+</div>
+
+<div class="all-done">
+    <h3>All Done!</h3>
+    
+    <form class="initial-enter">
+        <h5>Enter Intitials</h5>
+        <input type="text" placeholder="Enter your initials">
+        <button id="submit-btn" class="btn">Submit</button>
+    </form>
+</div>
+
+<script src="./assets/js/questions.js."></script>
+<script src="./assets/js/highscores.js"></script>
 </body>
 </html>

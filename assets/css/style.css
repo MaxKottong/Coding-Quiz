@@ -4,6 +4,19 @@
     padding: 0;
 }
 
+#view-highscore {
+    text-decoration: none;
+    font-size: 20px;
+    margin-left: 15px;
+}
+
+#homepage-time {
+    text-align: right;
+    display: flex;
+    justify-content: right;
+    margin-right: 10px;
+}
+
 .container {
     width: 100vw;
     height: 50vh;
