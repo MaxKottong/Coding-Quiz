@@ -1,5 +1,16 @@
+var homepageTimeEl = document.querySelector("#homepage-time");
+var containerEl = document.querySelector(".container");
+var startQuizBtnEl = document.querySelector("#start-quiz-btn");
+var divQuestionsEl = document.querySelector(".div-questions");
 var questionListEl = document.querySelector("#question-list");
-var divQuestionsEl = document.querySelector(".divQuestions");
+var answerResponseEl = document.querySelector("#answer-response");
+var allDoneEl = document.querySelector(".all-done");
+var scoreEl = document.querySelector("#score");
+var submitBtnEl = document.querySelector("#submit-btn");
+
+
+var timer = 61;
+var timerCount;
 
 var questions = [
     {
@@ -88,5 +99,47 @@ function displayQuestions() {
 }
 
 function buttonHandler(event) {
+    if (timer <= 0) {
+        clearInterval(timerCount);
+        containerEl.style.display = "none";
+        showScore();
+    }
+    var rightAnswer = event.target.textContent
+    if (rightAnswer === questions[i].answer) {
+        answerResponseEl.setAttribute("style", "color: green");
+        answerResponseEl.textContent = "Correct";
+    } else {
+        answerResponseEl.setAttribute("style", "color: red");
+        answerResponseEl.textContent = "Incorrect";
+        timer = timer - 10;
+    }
 
-}
+    if (i < questions.length - 1) {
+        i++;
+        setTimeout(function() {
+                displayQuestions();
+                answerResponseEl.textContent = "";
+            },
+            1000);
+    } else {
+        setTimeout(function() {
+            answerResponseEl.textContent = "";
+            showScore();
+            clearInterval(timerCount);
+        }, 500);
+    }
+
+    function showScore() {
+        allDoneEl.visibility = "visible";
+        homepageTimeEl.textContent = "Time: " + timer;
+        var highScore = timer;
+        scoreEl.textContent = "Your score is: " + highScore;
+        localStorage.setItem(highScore);
+    }
+};
+
+document.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+});
+
