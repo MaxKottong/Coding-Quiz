@@ -14,6 +14,8 @@ var i = 0;
 var timer = 61;
 var timerCount;
 
+allDoneEl.style.display = "none";
+
 function addTimer() {
     timerCount = setInterval(function() {
         timer--;
@@ -29,35 +31,76 @@ document.addEventListener("click", function(event) {
     if (event.target === startQuizBtnEl) {
         containerEl.style.display = "none";
         allDoneEl.style.display = "none";
+        addTimer();
         displayQuestions();
     }
 });
 
+function buttonHandler(event) {
+    if (timer <= 0) {
+        clearInterval(timerCount);
+        containerEl.style.display = "none";
+        showScore();
+    }
+    var answerChoice = event.target.textContent;
+    if (answerChoice === questions[i].answer) {
+        answerResponseEl.setAttribute("style", "color: green");
+        answerResponseEl.textContent = "Correct";
+    } else {
+        answerResponseEl.setAttribute("style", "color: red");
+        answerResponseEl.textContent = "Incorrect";
+        timer = timer - 10;
+    }
+
+    if (i < questions.length - 1) {
+        i++;
+        setTimeout(function () {
+            displayQuestions();
+            answerResponseEl.textContent = "";
+        },
+            1000);
+    } else {
+        setTimeout(function () {
+            answerResponseEl.textContent = "";
+            showScore();
+            clearInterval(timerCount);
+        }, 500);
+    }
+
+    function showScore() {
+        allDoneEl.visibility = "visible";
+        homepageTimeEl.textContent = "Time: " + timer;
+        var displayScore = timer;
+        scoreEl.textContent = "Your score is: " + displayScore;
+        localStorage.setItem("Highscores", displayScore);
+    }
+};
+
 var questions = [
     {
-        question: "What is a question?",
+        question: "How many in a duo?",
         choices: ["1", "2", "3", "4"],
-        answer: 2
+        answer: "2"
     },
     {
-        question: "What is a question?",
+        question: "How many in a single?",
         choices: ["1", "2", "3", "4"],
-        answer: 2
+        answer: "1"
     },
     {
-        question: "What is a question?",
+        question: "How many in a trio?",
         choices: ["1", "2", "3", "4"],
-        answer: 2
+        answer: "3"
     },
     {
-        question: "What is a question?",
+        question: "How many in a quad?",
         choices: ["1", "2", "3", "4"],
-        answer: 2
+        answer: "4"
     },
     {
-        question: "What is a question?",
+        question: "How many (1)?",
         choices: ["1", "2", "3", "4"],
-        answer: 2
+        answer: "1"
     }
 ];
 
@@ -107,54 +150,21 @@ function displayQuestions() {
     questionListEl.appendChild(li4);
     divQuestionsEl.appendChild(questionListEl);
 
-    var questionBtn = document.querySelector(".questionBtn");
+    var questionBtn = document.querySelectorAll(".questionBtn");
     questionBtn.forEach(function(event) {
         event.addEventListener("click", buttonHandler);
     });
 }
 
-function buttonHandler(event) {
-    if (timer <= 0) {
-        clearInterval(timerCount);
-        containerEl.style.display = "none";
-        showScore();
-    }
-    var answerChoice = event.target.textContent;
-    if (answerChoice === questions[i].answer) {
-        answerResponseEl.setAttribute("style", "color: green");
-        answerResponseEl.textContent = "Correct";
-    } else {
-        answerResponseEl.setAttribute("style", "color: red");
-        answerResponseEl.textContent = "Incorrect";
-        timer = timer - 10;
-    }
-
-    if (i < questions.length - 1) {
-        i++;
-        setTimeout(function() {
-                displayQuestions();
-                answerResponseEl.textContent = "";
-            },
-            1000);
-    } else {
-        setTimeout(function() {
-            answerResponseEl.textContent = "";
-            showScore();
-            clearInterval(timerCount);
-        }, 500);
-    }
-
-    function showScore() {
-        allDoneEl.visibility = "visible";
-        homepageTimeEl.textContent = "Time: " + timer;
-        var highScore = timer;
-        scoreEl.textContent = "Your score is: " + highScore;
-        localStorage.setItem(highScore);
-    }
-};
-
 document.addEventListener("submit", function(event) {
-    event.preventDefault();
+    event.preventDefault(); 
+    var initialsEl = document.querySelector("#initial-input");
 
+    if (initialsEl === "") {
+        alert("Please put in your initials");
+    } else {
+        localStorage.setItem("Initial", initialsEl)
+        highScore();
+    }
 });
 
