@@ -9,8 +9,11 @@
 <body>
     <div class="highscores-page">
         <h2>Highscores</h2>
-        <button class="btn" id="go-back-btn">Go Back</button>
-        <button class="btn" id="clear-scores-btn">Clear Highscores</button>
+        <div id="highscores">
+            <input type="text" id="get-scores"/>
+        </div>
+        <button class="btn" id="go-back-btn" onclick="init()">Go Back</button>
+        <button class="btn" id="clear-scores-btn" onclick="clearScores()">Clear Highscores</button>
     </div>
 <script src="../js/highscores.js"></script>
 </body>

@@ -72,7 +72,7 @@ function buttonHandler(event) {
         homepageTimeEl.textContent = "Time: " + timer;
         var displayScore = timer;
         scoreEl.textContent = "Your score is: " + displayScore;
-        localStorage.setItem("Highscores", displayScore);
+        localStorage.setItem("Score", displayScore);
     }
 };
 
@@ -163,7 +163,7 @@ document.addEventListener("submit", function(event) {
     if (initialsEl === "") {
         alert("Please put in your initials");
     } else {
-        localStorage.setItem("Initial", initialsEl)
+        localStorage.setItem("Initials", initialsEl)
         highScore();
     }
 });
