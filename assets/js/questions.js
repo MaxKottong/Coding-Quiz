@@ -14,7 +14,7 @@ var i = 0;
 var timer = 61;
 var timerCount;
 
-allDoneEl.style.display = "none";
+allDoneEl.style.visibility = "hidden";
 
 function addTimer() {
     timerCount = setInterval(function() {
@@ -29,8 +29,8 @@ function addTimer() {
 
 document.addEventListener("click", function(event) {
     if (event.target === startQuizBtnEl) {
-        containerEl.style.display = "none";
-        allDoneEl.style.display = "none";
+        containerEl.style.visibility = "hidden";
+        allDoneEl.style.visibility = "hidden";
         addTimer();
         displayQuestions();
     }
@@ -39,7 +39,7 @@ document.addEventListener("click", function(event) {
 function buttonHandler(event) {
     if (timer <= 0) {
         clearInterval(timerCount);
-        containerEl.style.display = "none";
+        containerEl.style.visibility = "hidden";
         showScore();
     }
     var answerChoice = event.target.textContent;
@@ -57,8 +57,7 @@ function buttonHandler(event) {
         setTimeout(function () {
             displayQuestions();
             answerResponseEl.textContent = "";
-        },
-            1000);
+        }, 1000);
     } else {
         setTimeout(function () {
             answerResponseEl.textContent = "";
@@ -68,7 +67,7 @@ function buttonHandler(event) {
     }
 
     function showScore() {
-        allDoneEl.visibility = "visible";
+        allDoneEl.style.visibility = "visible";
         homepageTimeEl.textContent = "Time: " + timer;
         var displayScore = timer;
         scoreEl.textContent = "Your score is: " + displayScore;
@@ -78,18 +77,18 @@ function buttonHandler(event) {
 
 var questions = [
     {
-        question: "How many in a duo?",
-        choices: ["1", "2", "3", "4"],
-        answer: "2"
+        question: "What is the correct way to append an element?",
+        choices: ["appendChild();", "AppendChild();", "appendchild();", "appendChild;"],
+        answer: "appendChild();"
     },
     {
-        question: "How many in a single?",
-        choices: ["1", "2", "3", "4"],
-        answer: "1"
+        question: "How do you select an element from an HTML page?",
+        choices: ["document.select('');", "Document.QuerySelector('');", "document.querySelector('');", "querySelector('');"],
+        answer: "document.querySelector('');"
     },
     {
-        question: "How many in a trio?",
-        choices: ["1", "2", "3", "4"],
+        question: "",
+        choices: ["", "2", "3", "4"],
         answer: "3"
     },
     {
@@ -158,9 +157,9 @@ function displayQuestions() {
 
 document.addEventListener("submit", function(event) {
     event.preventDefault(); 
-    var initialsEl = document.querySelector("#initial-input");
+    var initialsEl = document.querySelector("#initial-input").value;
 
-    if (initialsEl === "") {
+    if (initialsEl.value === "") {
         alert("Please put in your initials");
     } else {
         localStorage.setItem("Initials", initialsEl)
