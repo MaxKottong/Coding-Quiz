@@ -8,13 +8,16 @@ var answerResponseEl = document.querySelector("#answer-response");
 var allDoneEl = document.querySelector(".all-done");
 var scoreEl = document.querySelector("#score");
 var submitBtnEl = document.querySelector("#submit-btn");
+var highscoresPageEl = document.querySelector(".highscores-page");
 
 var i = 0;
 
 var timer = 61;
 var timerCount;
+var displayScore = "";
 
 allDoneEl.style.visibility = "hidden";
+highscoresPageEl.style.visibility = "hidden";
 
 function addTimer() {
     timerCount = setInterval(function() {
@@ -61,6 +64,7 @@ function buttonHandler(event) {
     } else {
         setTimeout(function () {
             answerResponseEl.textContent = "";
+            divQuestionsEl.style.visibility = "hidden";
             showScore();
             clearInterval(timerCount);
         }, 500);
@@ -69,9 +73,8 @@ function buttonHandler(event) {
     function showScore() {
         allDoneEl.style.visibility = "visible";
         homepageTimeEl.textContent = "Time: " + timer;
-        var displayScore = timer;
+        displayScore = timer;
         scoreEl.textContent = "Your score is: " + displayScore;
-        localStorage.setItem("Score", displayScore);
     }
 };
 
@@ -87,19 +90,19 @@ var questions = [
         answer: "document.querySelector('');"
     },
     {
-        question: "",
-        choices: ["", "2", "3", "4"],
-        answer: "3"
+        question: "If localstorage reads data as object, object from an array, what happened?",
+        choices: ["You did not setItem the data correctly", "You did not stringify the data", "You forgot a semicolon somewhere", "Localstorage doesn't like you"],
+        answer: "You did not stringify the data"
     },
     {
-        question: "How many in a quad?",
-        choices: ["1", "2", "3", "4"],
-        answer: "4"
+        question: "Commonly used data types are: ",
+        choices: ["Strings, numbers and booleans", "Bits, bytes and megabytes", "Letters, numbers and words", "True, false and maybe"],
+        answer: "Strings, numbers and booleans"
     },
     {
-        question: "How many (1)?",
-        choices: ["1", "2", "3", "4"],
-        answer: "1"
+        question: "Arrays in JavaScript can be used to store: ",
+        choices: ["Special characters", "Numbers and strings", "Booleans", "All of the above"],
+        answer: "All of the above"
     }
 ];
 
@@ -162,8 +165,22 @@ document.addEventListener("submit", function(event) {
     if (initialsEl.value === "") {
         alert("Please put in your initials");
     } else {
-        localStorage.setItem("Initials", initialsEl)
+        var highScore = JSON.stringify([initialsEl, displayScore]);
+        var highScores = [];
+        var highScoresString = localStorage.getItem("HighScores");
+        if (highScoresString) {
+            highScores = JSON.parse(highScoresString);
+        }
+
+        highScores.push(highScore);
+        localStorage.setItem("HighScores", JSON.stringify(highScores));
+        allDoneEl.style.visibility = "hidden";
+
         highScore();
     }
+});
+
+document.addEventListener("button", function (event) {
+    highScore();
 });
 

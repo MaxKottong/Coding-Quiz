@@ -8,35 +8,44 @@
 </head>
 <body>
     <header>
-        <a id="view-highscore" href="./assets/html/highscores.html">View Highscores</a>
+        <button type="button" id="view-scores-btn">View Highscores</button>
         <div id="homepage-time">Time: 0</div>
     </header>
-<div class="container">
-    <div id="homepage">
-        <h1>Coding Quiz Challenge</h1>
-        <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
-        <button id="start-quiz-btn" class="btn">Start Quiz</button>
+    <div class="container">
+        <div id="homepage">
+            <h1>Coding Quiz Challenge</h1>
+            <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
+            <button id="start-quiz-btn" class="btn">Start Quiz</button>
+        </div>
     </div>
-</div>
 
-<div class="div-questions">
-    <h3 id="title"></h3>
-    <ol id="question-list"></ol>
-</div>
-<br>
-<div id="answer-response"></div>
+    <div class="div-questions">
+        <h3 id="title"></h3>
+        <ol id="question-list"></ol>
+    </div>
+    <br>
+    <div id="answer-response"></div>
 
-<div class="all-done">
-    <h3>All Done!</h3>
-    <p id="score"></p>
-    <form class="initial-enter" action="./assets/html/highscores.html">
-        <h5>Enter Intitials</h5>
-        <input type="text" id="initial-input" placeholder="Enter your initials">
-        <button type ="submit" id="submit-btn" class="btn">Submit</button>
-    </form>
-</div>
+    <div class="all-done">
+        <h3>All Done!</h3>
+        <p id="score"></p>
+        <form class="initial-enter" action="./assets/html/highscores.html">
+            <h5>Enter Intitials</h5>
+            <input type="text" id="initial-input" placeholder="Enter your initials">
+            <button type="submit" id="submit-btn" class="btn">Submit</button>
+        </form>
+    </div>
 
-<script src="./assets/js/questions.js"></script>
-<script src="./assets/js/highscores.js"></script>
+    <div class="highscores-page">
+        <h2>Highscores</h2>
+        <div id="highscores">
+            <input type="text" id="get-scores" readonly="readonly" />
+        </div>
+        <button class="btn" id="go-back-btn" onclick="init()">Go Back</button>
+        <button class="btn" id="clear-scores-btn" onclick="clearScores()">Clear Highscores</button>
+    </div>
+
+    <script src="./assets/js/questions.js"></script>
+    <script src="./assets/js/highscores.js"></script>
 </body>
 </html>
