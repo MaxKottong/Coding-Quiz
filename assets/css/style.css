@@ -4,14 +4,12 @@
     padding: 0;
 }
 
-header {
-    margin: 5px 0 0 5px;
+ul {
+    list-style-type: none;
 }
 
-#view-highscore {
-    text-decoration: none;
-    font-size: 20px;
-    margin-left: 15px;
+header {
+    margin: 5px 0 0 5px;
 }
 
 #homepage-time {
@@ -22,11 +20,6 @@ header {
 }
 
 .container {
-    display: flex;
-    position: relative;
-    top: 250px;
-    justify-content: center;
-    align-items: center;
     text-align: center;
 }
 
@@ -36,10 +29,11 @@ header {
     text-decoration: none;
     padding: 2px;
     border-radius: 5px;
+    border: none;
+    cursor: pointer;
 }
 
 #start-quiz-btn {
-    border: none;
     margin: 5px;
     padding: 10px;
     font-size: 15px;
@@ -48,10 +42,10 @@ header {
 
 #view-scores-btn {
     background: none;
-    border:none;
     padding: 0;
     cursor: pointer;
     font-size: 20px;
+    border: none;
 }
 
 .div-questions {
@@ -75,8 +69,62 @@ header {
     margin: 2px;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 15px;
 }
 
 #homepage p {
 
+}
+
+.all-done {
+    visibility: hidden;
+    position: absolute;
+    left: 30vw;
+}
+
+.all-done h3 {
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+#score {
+    margin-bottom: 15px;
+}
+
+.all-done h5 {
+    font-size: 20px;
+    display: inline-block;
+}
+
+.initial-enter {
+    display: inline-block;
+}
+
+#submit-btn {
+    border: none;
+    padding: 3px 5px 3px 5px;
+    cursor: pointer;
+}
+
+.highscores-page {
+    visibility: hidden;
+    position: absolute;
+    left: 30vw;
+}
+
+.highscores-page h2 {
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+#highscores-list {
+    margin-bottom: 15px;
+}
+
+#go-back-btn {
+    padding: 3px 5px 3px 5px;
+}
+
+#clear-scores-btn {
+    padding: 3px 5px 3px 5px;
 }

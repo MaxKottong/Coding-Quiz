@@ -9,15 +9,13 @@ var allDoneEl = document.querySelector(".all-done");
 var scoreEl = document.querySelector("#score");
 var submitBtnEl = document.querySelector("#submit-btn");
 var highscoresPageEl = document.querySelector(".highscores-page");
+var viewScoresBtnEl = document.querySelector("#view-scores-btn");
 
 var i = 0;
 
-var timer = 61;
+var timer = 3;
 var timerCount;
 var displayScore = "";
-
-allDoneEl.style.visibility = "hidden";
-highscoresPageEl.style.visibility = "hidden";
 
 //High Score Logic
 function highScorePage() {
@@ -85,10 +83,10 @@ function buttonHandler(event) {
     var answerChoice = event.target.textContent;
     if (answerChoice === questions[i].answer) {
         answerResponseEl.setAttribute("style", "color: green");
-        answerResponseEl.textContent = "Correct";
+        answerResponseEl.innerHTML = "<div><hr></div> Correct";
     } else {
         answerResponseEl.setAttribute("style", "color: red");
-        answerResponseEl.textContent = "Incorrect";
+        answerResponseEl.innerHTML = "<div><hr></div> Incorrect";
         timer = timer - 10;
     }
 
@@ -109,6 +107,7 @@ function buttonHandler(event) {
 
     function showScore() {
         allDoneEl.style.visibility = "visible";
+        divQuestionsEl.style.visibility = "hidden";
         homepageTimeEl.textContent = "Time: " + timer;
         displayScore = timer;
         scoreEl.textContent = "Your score is: " + displayScore;
@@ -217,7 +216,9 @@ document.addEventListener("submit", function(event) {
     }
 });
 
-document.addEventListener("button", function (event) {
+function highscoreButtonHandler(event) {
     highScorePage();
-});
+}
+
+viewScoresBtnEl.addEventListener("click", highscoreButtonHandler);
 
