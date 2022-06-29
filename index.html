@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
-    <header>
+<header>
+    <div>
         <button type="button" id="view-scores-btn">View Highscores</button>
         <div id="homepage-time">Time: 0</div>
-    </header>
+    </div>
+</header>
     <div class="container">
         <div id="homepage">
             <h1>Coding Quiz Challenge</h1>
@@ -22,11 +24,10 @@
     <div class="div-questions">
         <h3 id="title"></h3>
         <ol id="question-list"></ol>
+        <div id="answer-response"></div>
     </div>
-    <br>
-    <div id="answer-response"></div>
 
-    <div class="all-done">
+<div class="all-done">
         <h3>All Done!</h3>
         <p id="score"></p>
         <form class="initial-enter" action="./assets/html/highscores.html">
@@ -39,13 +40,13 @@
     <div class="highscores-page">
         <h2>Highscores</h2>
         <div id="highscores">
-            <input type="text" id="get-scores" readonly="readonly" />
+            <ul id="highscores-list"></ul>
         </div>
+        
         <button class="btn" id="go-back-btn" onclick="init()">Go Back</button>
         <button class="btn" id="clear-scores-btn" onclick="clearScores()">Clear Highscores</button>
     </div>
 
     <script src="./assets/js/questions.js"></script>
-    <script src="./assets/js/highscores.js"></script>
 </body>
 </html>

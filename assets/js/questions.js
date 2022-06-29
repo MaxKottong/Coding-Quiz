@@ -19,6 +19,43 @@ var displayScore = "";
 allDoneEl.style.visibility = "hidden";
 highscoresPageEl.style.visibility = "hidden";
 
+//High Score Logic
+function highScorePage() {
+    var highscoresPageEl = document.querySelector(".highscores-page");
+    highscoresPageEl.style.visibility = "visible";
+
+    var highScores = JSON.parse(localStorage.getItem("HighScores"));
+    var sortedHighScores = sortScores(highScores, "Score");
+    sortedHighScores.forEach(addHighScores);
+}
+
+function addHighScores(item, index) {
+    var ul = document.getElementById("highscores-list");
+    var li = document.createElement("li");
+
+    var highScore = JSON.parse(item);
+    li.appendChild(document.createTextNode((index + 1) + ") " + highScore.Initials + ": " + highScore.Score));
+    ul.appendChild(li);
+}
+
+function sortScores(array, score) {
+    return array.sort(function (a, b) {
+        var x = a[score]; var y = b[score];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+}
+
+function init() {
+    location.reload();
+}
+
+function clearScores() {
+    localStorage.clear();
+    var ul = document.getElementById("highscores-list");
+    ul.innerHTML = "";
+}
+//End High Score Logic
+
 function addTimer() {
     timerCount = setInterval(function() {
         timer--;
@@ -162,10 +199,10 @@ document.addEventListener("submit", function(event) {
     event.preventDefault(); 
     var initialsEl = document.querySelector("#initial-input").value;
 
-    if (initialsEl.value === "") {
+    if (initialsEl === "") {
         alert("Please put in your initials");
     } else {
-        var highScore = JSON.stringify([initialsEl, displayScore]);
+        var highScore = JSON.stringify({ Initials: initialsEl, Score: displayScore });
         var highScores = [];
         var highScoresString = localStorage.getItem("HighScores");
         if (highScoresString) {
@@ -176,11 +213,11 @@ document.addEventListener("submit", function(event) {
         localStorage.setItem("HighScores", JSON.stringify(highScores));
         allDoneEl.style.visibility = "hidden";
 
-        highScore();
+        highScorePage();
     }
 });
 
 document.addEventListener("button", function (event) {
-    highScore();
+    highScorePage();
 });
 
