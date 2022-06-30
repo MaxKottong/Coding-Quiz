@@ -10,10 +10,11 @@ var scoreEl = document.querySelector("#score");
 var submitBtnEl = document.querySelector("#submit-btn");
 var highscoresPageEl = document.querySelector(".highscores-page");
 var viewScoresBtnEl = document.querySelector("#view-scores-btn");
+var highScoresListEl = document.getElementById("highscores-list");
 
 var i = 0;
 
-var timer = 3;
+var timer = 61;
 var timerCount;
 var displayScore = "";
 
@@ -21,26 +22,26 @@ var displayScore = "";
 function highScorePage() {
     var highscoresPageEl = document.querySelector(".highscores-page");
     highscoresPageEl.style.visibility = "visible";
+    allDoneEl.style.visibility = "hidden";
+    divQuestionsEl.style.visibility = "hidden";
+    containerEl.style.visibility = "hidden";
+    highScoresListEl.innerHTML = "";
 
     var highScores = JSON.parse(localStorage.getItem("HighScores"));
-    var sortedHighScores = sortScores(highScores, "Score");
-    sortedHighScores.forEach(addHighScores);
+    highScores.sort(function (a, b) {
+        var score1 = JSON.parse(a);
+        var score2 = JSON.parse(b);
+        return parseInt(score2.Score) - parseInt(score1.Score);
+    })
+    highScores.forEach(addHighScores);
 }
 
 function addHighScores(item, index) {
-    var ul = document.getElementById("highscores-list");
     var li = document.createElement("li");
 
     var highScore = JSON.parse(item);
     li.appendChild(document.createTextNode((index + 1) + ") " + highScore.Initials + ": " + highScore.Score));
-    ul.appendChild(li);
-}
-
-function sortScores(array, score) {
-    return array.sort(function (a, b) {
-        var x = a[score]; var y = b[score];
-        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-    });
+    highScoresListEl.appendChild(li);
 }
 
 function init() {
@@ -56,38 +57,47 @@ function clearScores() {
 
 function addTimer() {
     timerCount = setInterval(function() {
-        timer--;
         var timerReset = homepageTimeEl.textContent = "Time: " + timer;
         if (timer <= 0) {
             clearInterval(timerCount);
             homepageTimeEl.textContent = timerReset;
+            containerEl.style.visibility = "hidden";
+            showScore();
+        }
+        else {
+            timer--;
         }
     }, 1000);
+}
+
+function showScore() {
+    allDoneEl.style.visibility = "visible";
+    divQuestionsEl.style.visibility = "hidden";
+    homepageTimeEl.textContent = "Time: " + timer;
+    displayScore = timer;
+    scoreEl.textContent = "Your score is: " + displayScore;
 }
 
 document.addEventListener("click", function(event) {
     if (event.target === startQuizBtnEl) {
         containerEl.style.visibility = "hidden";
-        allDoneEl.style.visibility = "hidden";
         addTimer();
         displayQuestions();
     }
 });
 
 function buttonHandler(event) {
-    if (timer <= 0) {
-        clearInterval(timerCount);
-        containerEl.style.visibility = "hidden";
-        showScore();
-    }
     var answerChoice = event.target.textContent;
-    if (answerChoice === questions[i].answer) {
+    if (answerChoice.substring(3) === questions[i].answer) {
         answerResponseEl.setAttribute("style", "color: green");
         answerResponseEl.innerHTML = "<div><hr></div> Correct";
     } else {
         answerResponseEl.setAttribute("style", "color: red");
         answerResponseEl.innerHTML = "<div><hr></div> Incorrect";
         timer = timer - 10;
+        if (timer < 0) {
+            timer = 0;
+        }
     }
 
     if (i < questions.length - 1) {
@@ -103,14 +113,6 @@ function buttonHandler(event) {
             showScore();
             clearInterval(timerCount);
         }, 500);
-    }
-
-    function showScore() {
-        allDoneEl.style.visibility = "visible";
-        divQuestionsEl.style.visibility = "hidden";
-        homepageTimeEl.textContent = "Time: " + timer;
-        displayScore = timer;
-        scoreEl.textContent = "Your score is: " + displayScore;
     }
 };
 
@@ -156,37 +158,33 @@ function displayQuestions() {
     li1.setAttribute("class", "questionLi");
     var btn1 = document.createElement("button");
     btn1.setAttribute("class", "questionBtn");
-    btn1.textContent = choice1;
+    btn1.textContent = "1) " + choice1;
     li1.appendChild(btn1);
     questionListEl.appendChild(li1);
-    divQuestionsEl.appendChild(questionListEl);
 
     var li2 = document.createElement("li");
     li2.setAttribute("class", "questionLi");
     var btn2 = document.createElement("button");
     btn2.setAttribute("class", "questionBtn");
-    btn2.textContent = choice2;
+    btn2.textContent = "2) " + choice2;
     li2.appendChild(btn2);
     questionListEl.appendChild(li2);
-    divQuestionsEl.appendChild(questionListEl);
 
     var li3 = document.createElement("li");
     li3.setAttribute("class", "questionLi");
     var btn3 = document.createElement("button");
     btn3.setAttribute("class", "questionBtn");
-    btn3.textContent = choice3;
+    btn3.textContent = "3) " + choice3;
     li3.appendChild(btn3);
     questionListEl.appendChild(li3);
-    divQuestionsEl.appendChild(questionListEl);
 
     var li4 = document.createElement("li");
     li4.setAttribute("class", "questionLi");
     var btn4 = document.createElement("button");
     btn4.setAttribute("class", "questionBtn");
-    btn4.textContent = choice4;
+    btn4.textContent = "4) " + choice4;
     li4.appendChild(btn4);
     questionListEl.appendChild(li4);
-    divQuestionsEl.appendChild(questionListEl);
 
     var questionBtn = document.querySelectorAll(".questionBtn");
     questionBtn.forEach(function(event) {

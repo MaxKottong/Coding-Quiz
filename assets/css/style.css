@@ -20,6 +20,9 @@ header {
 }
 
 .container {
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
     text-align: center;
 }
 
@@ -51,6 +54,7 @@ header {
 .div-questions {
     position: absolute;
     left: 30vw;
+    margin-right: 10%;
 }
 
 .div-questions h3 {
